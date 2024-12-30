@@ -1,0 +1,48 @@
+import random
+
+def generate_random_numbers(total_numbers, max_number):
+    """Tạo một danh sách các số ngẫu nhiên không trùng lặp."""
+    return random.sample(range(1, max_number + 1), total_numbers)
+
+def check_result(player_numbers, lottery_numbers):
+    """Kiểm tra xem người chơi có bao nhiêu số trùng khớp."""
+    matched_numbers = set(player_numbers) & set(lottery_numbers)
+    return len(matched_numbers), matched_numbers
+
+def main():
+    print("Chào mừng bạn đến với trò chơi Xổ Số!")
+    
+    # Thiết lập trò chơi
+    total_numbers = 6  # Số lượng số cần chọn
+    max_number = 49    # Giá trị lớn nhất của số
+    
+    # Người chơi chọn số
+    print(f"Hãy chọn {total_numbers} số từ 1 đến {max_number}.")
+    player_numbers = []
+    while len(player_numbers) < total_numbers:
+        try:
+            num = int(input(f"Nhập số thứ {len(player_numbers) + 1}: "))
+            if num < 1 or num > max_number:
+                print(f"Vui lòng nhập số trong khoảng từ 1 đến {max_number}.")
+            elif num in player_numbers:
+                print("Bạn đã chọn số này rồi, vui lòng chọn số khác.")
+            else:
+                player_numbers.append(num)
+        except ValueError:
+            print("Vui lòng nhập một số hợp lệ.")
+    
+    print(f"Số bạn đã chọn: {player_numbers}")
+    
+    # Máy tính chọn số
+    lottery_numbers = generate_random_numbers(total_numbers, max_number)
+    print(f"Kết quả xổ số: {lottery_numbers}")
+    
+    # Kiểm tra kết quả
+    matches, matched_numbers = check_result(player_numbers, lottery_numbers)
+    if matches > 0:
+        print(f"Chúc mừng! Bạn đã trúng {matches} số: {matched_numbers}")
+    else:
+        print("Rất tiếc, bạn không trúng số nào. Chúc may mắn lần sau!")
+
+if __name__ == "__main__":
+    main()
